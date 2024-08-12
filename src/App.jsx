@@ -8,9 +8,37 @@ import "./App.css";
 const API_URL = import.meta.env?.VITE_API_URL ?? "https://sil-bibles-api.parabible.com/"
 console.log(API_URL)
 
+const DEFAULT_TRANSLATION_ORDER = [
+  "NIV84",
+  "NIV11",
+  "RSV",
+  "NRSV",
+  "ESVUS16",
+  "NET08",
+  "GNTD",
+  "CEVUS06",
+  "NLT96",
+  "NLT04",
+  "GW",
+  "REB89",
+  "NASB",
+  "NJPS2017",
+  "KJV",
+  "EASY",
+  "NIrV",
+  "T4T",
+]
+const orderVersesByTranslation = (verses) => 
+  verses.slice().sort((a, b) => {
+    const aIndex = DEFAULT_TRANSLATION_ORDER.indexOf(a.translation) ?? DEFAULT_TRANSLATION_ORDER.length
+    const bIndex = DEFAULT_TRANSLATION_ORDER.indexOf(b.translation) ?? DEFAULT_TRANSLATION_ORDER.length
+    return aIndex - bIndex;
+  })
+
 const getVerses = async (ref) => {
   const response = await fetch(`${API_URL}?reference=${ref}`);
-  return response.json();
+  const sortedVerses = orderVersesByTranslation(await response.json());
+  return sortedVerses;
 };
 
 const VerseListItem = ({ text, translation }) => {
