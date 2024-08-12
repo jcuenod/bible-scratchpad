@@ -79,7 +79,7 @@ const SearchButton = ({ onSearch, currentRef }) => {
   }, [currentRef]);
 
   return (
-    <div className="relative max-w-md min-w-96 mx-auto">
+    <div className="min-w-96">
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -134,6 +134,16 @@ const SearchButton = ({ onSearch, currentRef }) => {
   );
 };
 
+const Button = ({ children, onClick, title }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    className="mx-1 my-2 text-white bg-blue-700 hover:bg-blue-800 active:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+  >
+    {children}
+  </button>
+);
+
 const copyAsTable = (verses) => {
   // copy as html table
   const table = document.createElement("table");
@@ -184,22 +194,18 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-center relative mx-auto">
         <SearchButton onSearch={updateVerses} currentRef={reference} />
+        <div className="flex flex-row ml-4">
         {/* copy button */}
-        <button
-          onClick={() => copyAsTable(verses)}
-          className="text-white bg-blue-700 hover:bg-blue-800 active:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-        >
-          Copy (Word)
-        </button>
+          <Button onClick={() => copyAsTable(verses)} title={"Copy (Word)"}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          </Button>
         {/* copy button */}
-        <button
-          onClick={() => copyAsUsfm(verses)}
-          className="text-white bg-blue-700 hover:bg-blue-800 active:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-        >
-          Copy (Paratext)
-        </button>
+          <Button onClick={() => copyAsUsfm(verses)} title="Copy (Paratext)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z"/><path d="M16 8 2 22"/><path d="M17.5 15H9"/></svg>
+          </Button>
+        </div>
       </div>
       <div className="text-left pt-8">
         <List
