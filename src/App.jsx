@@ -244,7 +244,8 @@ function App() {
           </Button>
         </div>
       </div>
-      <div className="text-left pt-8">
+      <div className="text-center pt-8">
+        <div className="text-left inline-block mx-auto">
         <List
           lockVertically={true}
           values={verses}
@@ -265,6 +266,7 @@ function App() {
             </div>
           )}
         />
+        </div>
       </div>
     </>
   );
