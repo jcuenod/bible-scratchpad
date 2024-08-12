@@ -255,7 +255,7 @@ function App() {
           renderList={({ children, props }) => <div {...props}>{children}</div>}
           renderItem={({ value, props }) => (
             <div
-              className="py-1 flex flex-row cursor-pointer hover:bg-blue-50"
+              className="px-2 py-1 flex flex-row text-gray-700 cursor-pointer hover:bg-blue-100 hover:text-blue-800 rounded"
               key={value.translation}
               {...props}
             >
