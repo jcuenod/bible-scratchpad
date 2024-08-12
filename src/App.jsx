@@ -5,8 +5,9 @@ import bookToUsfm from "./assets/bookToUsfm.json";
 const rp = new ReferenceParser();
 import "./App.css";
 
-const API_URL = import.meta.env?.VITE_API_URL ?? "https://sil-bibles-api.parabible.com/"
-console.log(API_URL)
+const API_URL =
+  import.meta.env?.VITE_API_URL ?? "https://sil-bibles-api.parabible.com/";
+console.log(API_URL);
 
 const DEFAULT_TRANSLATION_ORDER = [
   "NIV84",
@@ -27,13 +28,17 @@ const DEFAULT_TRANSLATION_ORDER = [
   "EASY",
   "NIrV",
   "T4T",
-]
-const orderVersesByTranslation = (verses) => 
+];
+const orderVersesByTranslation = (verses) =>
   verses.slice().sort((a, b) => {
-    const aIndex = DEFAULT_TRANSLATION_ORDER.indexOf(a.translation) ?? DEFAULT_TRANSLATION_ORDER.length
-    const bIndex = DEFAULT_TRANSLATION_ORDER.indexOf(b.translation) ?? DEFAULT_TRANSLATION_ORDER.length
+    const aIndex =
+      DEFAULT_TRANSLATION_ORDER.indexOf(a.translation) ??
+      DEFAULT_TRANSLATION_ORDER.length;
+    const bIndex =
+      DEFAULT_TRANSLATION_ORDER.indexOf(b.translation) ??
+      DEFAULT_TRANSLATION_ORDER.length;
     return aIndex - bIndex;
-  })
+  });
 
 const getVerses = async (ref) => {
   const response = await fetch(`${API_URL}?reference=${ref}`);
@@ -197,29 +202,62 @@ function App() {
       <div className="flex flex-row justify-center relative mx-auto">
         <SearchButton onSearch={updateVerses} currentRef={reference} />
         <div className="flex flex-row ml-4">
-        {/* copy button */}
+          {/* copy button */}
           <Button onClick={() => copyAsTable(verses)} title={"Copy (Word)"}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-file-text"
+            >
+              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+              <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+              <path d="M10 9H8" />
+              <path d="M16 13H8" />
+              <path d="M16 17H8" />
+            </svg>
           </Button>
-        {/* copy button */}
+          {/* copy button */}
           <Button onClick={() => copyAsUsfm(verses)} title="Copy (Paratext)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-feather"><path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z"/><path d="M16 8 2 22"/><path d="M17.5 15H9"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-feather"
+            >
+              <path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z" />
+              <path d="M16 8 2 22" />
+              <path d="M17.5 15H9" />
+            </svg>
           </Button>
         </div>
       </div>
       <div className="text-left pt-8">
         <List
-        lockVertically={true}
+          lockVertically={true}
           values={verses}
           onChange={({ oldIndex, newIndex }) =>
             setVerses(arrayMove(verses, oldIndex, newIndex))
           }
-          renderList={({ children, props }) => 
-          <div
-           {...props}>{children}</div>
-        }
+          renderList={({ children, props }) => <div {...props}>{children}</div>}
           renderItem={({ value, props }) => (
-            <div className="py-1 flex flex-row cursor-pointer hover:bg-blue-50" key={value.translation} {...props}>
+            <div
+              className="py-1 flex flex-row cursor-pointer hover:bg-blue-50"
+              key={value.translation}
+              {...props}
+            >
               <VerseListItem
                 translation={value.translation}
                 text={value.text}
